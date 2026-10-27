@@ -1,42 +1,23 @@
-# Environment and secrets
-.env
-.env.*
-!.env.example
-*.pem
-*.key
-
 # Python
 __pycache__/
 *.py[cod]
-*.pyd
-.python-version
-
-# Virtual environments
+.pytest_cache/
 .venv/
 venv/
-env/
 
-# Testing and coverage
-.pytest_cache/
-.coverage
-htmlcov/
+# Environment secrets
+.env
+.env.*
 
-# Tool caches
-.mypy_cache/
-.ruff_cache/
-.cache/
+# Generated data and telemetry
+data/events.jsonl
 
-# Frontend dependencies and builds
-node_modules/
-dist/
-build/
-.next/
+# Model artifacts
+models/*.joblib
+models/*.pkl
+models/*.pt
+models/*.pth
+models/*.onnx
 
-# IDE and OS files
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-
-# Generated simulation and test event logs
-data/*.jsonl
+# Temporary diagnostics
+debug_red_agent.py
