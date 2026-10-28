@@ -1,0 +1,268 @@
+{
+  "audit": "stratified_cv_integrity_and_generalization_gap",
+  "data_path": "D:\\NetMind\\data\\processed\\cleaned_final\\train.csv",
+  "rows": 1524593,
+  "feature_count": 67,
+  "features": [
+    "Destination Port",
+    "Flow Duration",
+    "Total Fwd Packets",
+    "Total Backward Packets",
+    "Total Length of Fwd Packets",
+    "Total Length of Bwd Packets",
+    "Fwd Packet Length Max",
+    "Fwd Packet Length Min",
+    "Fwd Packet Length Mean",
+    "Fwd Packet Length Std",
+    "Bwd Packet Length Max",
+    "Bwd Packet Length Min",
+    "Bwd Packet Length Mean",
+    "Bwd Packet Length Std",
+    "Flow Bytes/s",
+    "Flow Packets/s",
+    "Flow IAT Mean",
+    "Flow IAT Std",
+    "Flow IAT Max",
+    "Flow IAT Min",
+    "Fwd IAT Total",
+    "Fwd IAT Mean",
+    "Fwd IAT Std",
+    "Fwd IAT Max",
+    "Fwd IAT Min",
+    "Bwd IAT Total",
+    "Bwd IAT Mean",
+    "Bwd IAT Std",
+    "Bwd IAT Max",
+    "Bwd IAT Min",
+    "Fwd PSH Flags",
+    "Fwd Header Length",
+    "Bwd Header Length",
+    "Fwd Packets/s",
+    "Bwd Packets/s",
+    "Min Packet Length",
+    "Max Packet Length",
+    "Packet Length Mean",
+    "Packet Length Std",
+    "Packet Length Variance",
+    "FIN Flag Count",
+    "SYN Flag Count",
+    "RST Flag Count",
+    "PSH Flag Count",
+    "ACK Flag Count",
+    "URG Flag Count",
+    "ECE Flag Count",
+    "Down/Up Ratio",
+    "Average Packet Size",
+    "Avg Fwd Segment Size",
+    "Avg Bwd Segment Size",
+    "Subflow Fwd Packets",
+    "Subflow Fwd Bytes",
+    "Subflow Bwd Packets",
+    "Subflow Bwd Bytes",
+    "Init_Win_bytes_forward",
+    "Init_Win_bytes_backward",
+    "act_data_pkt_fwd",
+    "min_seg_size_forward",
+    "Active Mean",
+    "Active Std",
+    "Active Max",
+    "Active Min",
+    "Idle Mean",
+    "Idle Std",
+    "Idle Max",
+    "Idle Min"
+  ],
+  "cv_reproduction": {
+    "method": "StratifiedKFold",
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42,
+    "stratification_column": "Label"
+  },
+  "target_consistency": {
+    "rows_inconsistent_with_BENIGN_vs_attack_mapping": 0,
+    "mapping_rule": "Label == BENIGN -> target 0; otherwise target 1"
+  },
+  "exact_duplicate_audit": {
+    "rows_part_of_duplicate_hash_groups": 0,
+    "unique_feature_row_hashes": 1524593,
+    "candidate_duplicate_groups_exactly_examined": 0,
+    "exact_duplicate_groups_within_training_pool": 0,
+    "conflicting_label_groups_within_training_pool": 0,
+    "rows_in_conflicting_label_groups": 0,
+    "exact_duplicate_groups_crossing_cv_folds": 0,
+    "rows_in_duplicate_groups_crossing_cv_folds": 0,
+    "conflicting_label_groups_crossing_cv_folds": 0,
+    "rows_in_cross_fold_conflicting_groups": 0,
+    "note": "Hashing is a candidate-screening step; candidate duplicate rows are compared by actual feature values before being counted."
+  },
+  "label_counts_by_fold": {
+    "1": {
+      "BENIGN": 264387,
+      "DoS GoldenEye": 2056,
+      "DoS Hulk": 34523,
+      "DoS Slowhttptest": 1046,
+      "DoS slowloris": 1077,
+      "FTP-Patator": 1185,
+      "Heartbleed": 1,
+      "SSH-Patator": 644
+    },
+    "2": {
+      "BENIGN": 264387,
+      "DoS GoldenEye": 2056,
+      "DoS Hulk": 34523,
+      "DoS Slowhttptest": 1045,
+      "DoS slowloris": 1077,
+      "FTP-Patator": 1185,
+      "Heartbleed": 2,
+      "SSH-Patator": 644
+    },
+    "3": {
+      "BENIGN": 264387,
+      "DoS GoldenEye": 2056,
+      "DoS Hulk": 34523,
+      "DoS Slowhttptest": 1045,
+      "DoS slowloris": 1077,
+      "FTP-Patator": 1186,
+      "Heartbleed": 2,
+      "SSH-Patator": 643
+    },
+    "4": {
+      "BENIGN": 264387,
+      "DoS GoldenEye": 2056,
+      "DoS Hulk": 34523,
+      "DoS Slowhttptest": 1046,
+      "DoS slowloris": 1076,
+      "FTP-Patator": 1186,
+      "Heartbleed": 1,
+      "SSH-Patator": 643
+    },
+    "5": {
+      "BENIGN": 264386,
+      "DoS GoldenEye": 2057,
+      "DoS Hulk": 34523,
+      "DoS Slowhttptest": 1046,
+      "DoS slowloris": 1077,
+      "FTP-Patator": 1185,
+      "Heartbleed": 1,
+      "SSH-Patator": 643
+    }
+  },
+  "capture_day_counts_by_fold": {
+    "1": {
+      "Monday": 100141,
+      "Tuesday": 84187,
+      "Wednesday": 120591
+    },
+    "2": {
+      "Monday": 100419,
+      "Tuesday": 84486,
+      "Wednesday": 120014
+    },
+    "3": {
+      "Monday": 100319,
+      "Tuesday": 84472,
+      "Wednesday": 120128
+    },
+    "4": {
+      "Monday": 100565,
+      "Tuesday": 83863,
+      "Wednesday": 120490
+    },
+    "5": {
+      "Monday": 100671,
+      "Tuesday": 84054,
+      "Wednesday": 120193
+    }
+  },
+  "top_baseline_feature_importances": [
+    {
+      "feature": "Bwd Packet Length Std",
+      "importance": 0.09908259117665855
+    },
+    {
+      "feature": "Packet Length Variance",
+      "importance": 0.08432124865950395
+    },
+    {
+      "feature": "Bwd Packet Length Max",
+      "importance": 0.06927511168735552
+    },
+    {
+      "feature": "Avg Bwd Segment Size",
+      "importance": 0.0674939818930329
+    },
+    {
+      "feature": "Bwd Packet Length Mean",
+      "importance": 0.06714461082578202
+    },
+    {
+      "feature": "Max Packet Length",
+      "importance": 0.05808448262345877
+    },
+    {
+      "feature": "Subflow Bwd Bytes",
+      "importance": 0.05569375010754197
+    },
+    {
+      "feature": "Destination Port",
+      "importance": 0.05336988324627444
+    },
+    {
+      "feature": "Packet Length Std",
+      "importance": 0.04837978047831919
+    },
+    {
+      "feature": "Average Packet Size",
+      "importance": 0.033379052577028105
+    },
+    {
+      "feature": "Packet Length Mean",
+      "importance": 0.02225478394534976
+    },
+    {
+      "feature": "Fwd IAT Max",
+      "importance": 0.02052379783787428
+    },
+    {
+      "feature": "Flow IAT Std",
+      "importance": 0.020352679390155958
+    },
+    {
+      "feature": "Fwd IAT Mean",
+      "importance": 0.018695645051936396
+    },
+    {
+      "feature": "Fwd IAT Total",
+      "importance": 0.018581474548929496
+    },
+    {
+      "feature": "Flow IAT Max",
+      "importance": 0.01809769584499694
+    },
+    {
+      "feature": "Flow IAT Mean",
+      "importance": 0.0173215240097926
+    },
+    {
+      "feature": "Total Length of Bwd Packets",
+      "importance": 0.01456127383811282
+    },
+    {
+      "feature": "Fwd Packets/s",
+      "importance": 0.013767909623918028
+    },
+    {
+      "feature": "Init_Win_bytes_backward",
+      "importance": 0.01175542894043641
+    }
+  ],
+  "feature_importance_note": "Top importances extracted from the saved baseline model; these are associations, not proof of leakage.",
+  "limitations": [
+    "Exact duplicate checks do not detect near-duplicates or correlated flows.",
+    "Random stratified folds can mix capture days and related traffic sessions.",
+    "This audit does not prove why the original test score differs from CV.",
+    "The original test split contains attack families absent from the training pool; this audit does not train or test on those families."
+  ],
+  "elapsed_seconds": 8.26
+}

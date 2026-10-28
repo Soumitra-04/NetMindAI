@@ -161,7 +161,7 @@ export const SystemHealthPage: React.FC = () => {
 
     // 7. Ollama / Qwen LLM Service
     checks.push({
-      name: 'Ollama LLM Client (Qwen-2.5-7B)',
+      name: 'Ollama LLM Client (Qwen3:4B)',
       endpoint: 'http://localhost:11434 (Optional)',
       status: 'unknown',
       message:

@@ -1,0 +1,243 @@
+{
+  "experiment": "capture_day_holdout_on_existing_training_pool",
+  "data_path": "D:\\NetMind\\data\\processed\\cleaned_final\\train.csv",
+  "rows": 1524593,
+  "feature_count": 67,
+  "n_estimators": 80,
+  "days_available": [
+    "Wednesday",
+    "Monday",
+    "Tuesday"
+  ],
+  "days_held_out": [
+    "Wednesday",
+    "Monday",
+    "Tuesday"
+  ],
+  "saved_baseline_threshold_reference_only": 0.3065,
+  "evaluation_threshold": 0.5,
+  "notes": [
+    "Only the existing cleaned training CSV was used.",
+    "Validation and test CSVs were not loaded or used.",
+    "Fresh Random Forest models were fit for each day-holdout run.",
+    "Metrics use a fixed 0.5 threshold for consistency; no threshold tuning was performed.",
+    "Attack families absent from a fold's training days are unseen in that fold.",
+    "This does not evaluate Thursday/Friday rows because they are absent from the training CSV."
+  ],
+  "runs": [
+    {
+      "held_out_day": "Wednesday",
+      "train_rows": 923177,
+      "holdout_rows": 601416,
+      "train_attack_families": [
+        "FTP-Patator",
+        "SSH-Patator"
+      ],
+      "holdout_attack_families": [
+        "DoS GoldenEye",
+        "DoS Hulk",
+        "DoS Slowhttptest",
+        "DoS slowloris",
+        "Heartbleed"
+      ],
+      "attack_families_unseen_in_training": [
+        "DoS GoldenEye",
+        "DoS Hulk",
+        "DoS Slowhttptest",
+        "DoS slowloris",
+        "Heartbleed"
+      ],
+      "overall_metrics": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc_average_precision": 0.33057574140500456,
+        "roc_auc": 0.5009174365914845,
+        "tn": 407901,
+        "fp": 0,
+        "fn": 193515,
+        "tp": 0,
+        "false_positive_rate": 0.0,
+        "support_benign": 407901,
+        "support_attack": 193515
+      },
+      "per_family": [
+        {
+          "label": "BENIGN",
+          "rows": 407901,
+          "attack_rows": 0,
+          "attack_detected": 0,
+          "attack_missed": 0,
+          "attack_recall": null,
+          "median_attack_score": null,
+          "median_all_score": 0.0
+        },
+        {
+          "label": "DoS GoldenEye",
+          "rows": 10281,
+          "attack_rows": 10281,
+          "attack_detected": 0,
+          "attack_missed": 10281,
+          "attack_recall": 0.0,
+          "median_attack_score": 0.0,
+          "median_all_score": 0.0
+        },
+        {
+          "label": "DoS Hulk",
+          "rows": 172615,
+          "attack_rows": 172615,
+          "attack_detected": 0,
+          "attack_missed": 172615,
+          "attack_recall": 0.0,
+          "median_attack_score": 0.0,
+          "median_all_score": 0.0
+        },
+        {
+          "label": "DoS Slowhttptest",
+          "rows": 5228,
+          "attack_rows": 5228,
+          "attack_detected": 0,
+          "attack_missed": 5228,
+          "attack_recall": 0.0,
+          "median_attack_score": 0.0,
+          "median_all_score": 0.0
+        },
+        {
+          "label": "DoS slowloris",
+          "rows": 5384,
+          "attack_rows": 5384,
+          "attack_detected": 0,
+          "attack_missed": 5384,
+          "attack_recall": 0.0,
+          "median_attack_score": 0.0,
+          "median_all_score": 0.0
+        },
+        {
+          "label": "Heartbleed",
+          "rows": 7,
+          "attack_rows": 7,
+          "attack_detected": 0,
+          "attack_missed": 7,
+          "attack_recall": 0.0,
+          "median_attack_score": 0.0,
+          "median_all_score": 0.0
+        }
+      ],
+      "elapsed_seconds": 29.01
+    },
+    {
+      "held_out_day": "Monday",
+      "train_rows": 1022478,
+      "holdout_rows": 502115,
+      "train_attack_families": [
+        "DoS GoldenEye",
+        "DoS Hulk",
+        "DoS Slowhttptest",
+        "DoS slowloris",
+        "FTP-Patator",
+        "Heartbleed",
+        "SSH-Patator"
+      ],
+      "holdout_attack_families": [],
+      "attack_families_unseen_in_training": [],
+      "overall_metrics": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc_average_precision": 0.0,
+        "roc_auc": null,
+        "tn": 501922,
+        "fp": 193,
+        "fn": 0,
+        "tp": 0,
+        "false_positive_rate": 0.00038437409756729034,
+        "support_benign": 502115,
+        "support_attack": 0
+      },
+      "per_family": [
+        {
+          "label": "BENIGN",
+          "rows": 502115,
+          "attack_rows": 0,
+          "attack_detected": 0,
+          "attack_missed": 0,
+          "attack_recall": null,
+          "median_attack_score": null,
+          "median_all_score": 0.0
+        }
+      ],
+      "elapsed_seconds": 58.64
+    },
+    {
+      "held_out_day": "Tuesday",
+      "train_rows": 1103531,
+      "holdout_rows": 421062,
+      "train_attack_families": [
+        "DoS GoldenEye",
+        "DoS Hulk",
+        "DoS Slowhttptest",
+        "DoS slowloris",
+        "Heartbleed"
+      ],
+      "holdout_attack_families": [
+        "FTP-Patator",
+        "SSH-Patator"
+      ],
+      "attack_families_unseen_in_training": [
+        "FTP-Patator",
+        "SSH-Patator"
+      ],
+      "overall_metrics": {
+        "threshold": 0.5,
+        "precision": 0.0035149384885764497,
+        "recall": 0.0004374453193350831,
+        "f1": 0.0007780587434351293,
+        "pr_auc_average_precision": 0.2066092497574153,
+        "roc_auc": 0.9267674138331017,
+        "tn": 410784,
+        "fp": 1134,
+        "fn": 9140,
+        "tp": 4,
+        "false_positive_rate": 0.0027529751066959927,
+        "support_benign": 411918,
+        "support_attack": 9144
+      },
+      "per_family": [
+        {
+          "label": "BENIGN",
+          "rows": 411918,
+          "attack_rows": 0,
+          "attack_detected": 0,
+          "attack_missed": 0,
+          "attack_recall": null,
+          "median_attack_score": null,
+          "median_all_score": 0.0
+        },
+        {
+          "label": "FTP-Patator",
+          "rows": 5927,
+          "attack_rows": 5927,
+          "attack_detected": 0,
+          "attack_missed": 5927,
+          "attack_recall": 0.0,
+          "median_attack_score": 0.010309236895021525,
+          "median_all_score": 0.010309236895021525
+        },
+        {
+          "label": "SSH-Patator",
+          "rows": 3217,
+          "attack_rows": 3217,
+          "attack_detected": 4,
+          "attack_missed": 3213,
+          "attack_recall": 0.0012433944668946222,
+          "median_attack_score": 0.00013604194479461314,
+          "median_all_score": 0.00013604194479461314
+        }
+      ],
+      "elapsed_seconds": 78.19
+    }
+  ],
+  "elapsed_seconds": 170.66
+}

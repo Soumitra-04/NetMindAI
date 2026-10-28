@@ -1,0 +1,39 @@
+NETMIND BASELINE DIAGNOSTICS
+===============================
+Model: RandomForestClassifier
+Saved threshold: 0.306
+Features: 67
+
+VALIDATION — threshold analysis (validation labels only)
+---------------------------------------------------------
+Saved threshold: threshold=0.306, precision=0.8944, recall=0.8747, F1=0.8844, PR-AUC=0.7607
+Best validation F1: threshold=0.305, precision=0.8932, recall=0.8756, F1=0.8843, PR-AUC=0.7607
+
+Thresholds meeting validation recall targets (not test-tuned):
+  recall >= 80%: threshold=0.385, precision=0.9157, recall=0.8026, F1=0.8554, FP=161, FN=430
+  recall >= 90%: threshold=0.140, precision=0.6685, recall=0.9008, F1=0.7675, FP=973, FN=216
+  recall >= 95%: no threshold in grid reached target
+  recall >= 98%: no threshold in grid reached target
+
+TEST — saved threshold only (not used for threshold selection)
+--------------------------------------------------------------
+Precision=0.9968, Recall=0.3725, F1=0.5423, PR-AUC=0.9360, ROC-AUC=0.9630
+TN=374443, FP=261, FN=138099, TP=81971
+
+PER-LABEL ATTACK RECALL AT SAVED THRESHOLD
+--------------------------------------------
+BENIGN: rows=374704 (no target=1 rows)
+Bot: attacks=1948, detected=0, missed=1948, recall=0.0000, median_score=0.0000
+DDoS: attacks=127992, detected=81506, missed=46486, recall=0.6368, median_score=0.5689
+PortScan: attacks=90130, detected=465, missed=89665, recall=0.0052, median_score=0.0083
+
+SCORE DIAGNOSTICS
+------------------
+Test attack scores below threshold: 62.75%
+Test benign scores at/above threshold: 0.07%
+Attack score median: 0.0509
+Benign score median: 0.0000
+
+Interpretation reminder: select any operating threshold using validation data,
+then freeze it before the final test evaluation.
+Elapsed: 40.1s

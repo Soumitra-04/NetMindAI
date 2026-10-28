@@ -1,0 +1,25 @@
+NetMind — Random Forest Baseline
+======================================
+Threshold selected on validation: 0.306
+
+VALIDATION METRICS
+Precision: 0.8944
+Recall:    0.8747
+F1:        0.8844
+PR-AUC:    0.7607
+ROC-AUC:   0.9776
+
+HELD-OUT TEST METRICS
+Precision: 0.9968
+Recall:    0.3725
+F1:        0.5423
+PR-AUC:    0.9361
+ROC-AUC:   0.9630
+
+TEST CONFUSION MATRIX
+TN=374,443  FP=261
+FN=138,099  TP=81,971
+
+Training time: 2.29 minutes
+Model: D:\NetMind\models\baseline_random_forest.joblib
+JSON report: D:\NetMind\reports\baseline_metrics.json

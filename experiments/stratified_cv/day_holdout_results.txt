@@ -1,0 +1,41 @@
+NETMIND CAPTURE-DAY HOLDOUT EXPERIMENT
+=======================================
+Rows: 1,524,593 | features: 67 | trees per run: 80
+Evaluation threshold: 0.5
+
+HOLDOUT DAY: Wednesday
+---------------------
+Train rows: 923,177 | holdout rows: 601,416
+Precision=0.0000 Recall=0.0000 F1=0.0000 PR-AUC=0.3306 ROC-AUC=0.5009174365914845
+TN=407,901 FP=0 FN=193,515 TP=0
+Attack families unseen in training: ['DoS GoldenEye', 'DoS Hulk', 'DoS Slowhttptest', 'DoS slowloris', 'Heartbleed']
+Per-family attack recall:
+  DoS GoldenEye: 0.0000 (0/10281) median_score=0.0000
+  DoS Hulk: 0.0000 (0/172615) median_score=0.0000
+  DoS Slowhttptest: 0.0000 (0/5228) median_score=0.0000
+  DoS slowloris: 0.0000 (0/5384) median_score=0.0000
+  Heartbleed: 0.0000 (0/7) median_score=0.0000
+
+HOLDOUT DAY: Monday
+------------------
+Train rows: 1,022,478 | holdout rows: 502,115
+Precision=0.0000 Recall=0.0000 F1=0.0000 PR-AUC=0.0000 ROC-AUC=N/A
+TN=501,922 FP=193 FN=0 TP=0
+Attack families unseen in training: []
+Per-family attack recall:
+
+HOLDOUT DAY: Tuesday
+-------------------
+Train rows: 1,103,531 | holdout rows: 421,062
+Precision=0.0035 Recall=0.0004 F1=0.0008 PR-AUC=0.2066 ROC-AUC=0.9267674138331017
+TN=410,784 FP=1,134 FN=9,140 TP=4
+Attack families unseen in training: ['FTP-Patator', 'SSH-Patator']
+Per-family attack recall:
+  FTP-Patator: 0.0000 (0/5927) median_score=0.0103
+  SSH-Patator: 0.0012 (4/3217) median_score=0.0001
+
+INTERPRETATION NOTE
+-------------------
+A low score on a held-out day can reflect both day shift and missing attack families.
+A high score does not prove generalization to Thursday/Friday, which are not in this training CSV.
+Elapsed: 170.7s

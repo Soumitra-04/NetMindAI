@@ -1,0 +1,66 @@
+NETMIND STRATIFIED CV AUDIT
+=============================
+Rows: 1,524,593
+Features: 67
+Target mapping inconsistencies: 0
+
+EXACT DUPLICATE AUDIT
+---------------------
+Rows in duplicate hash groups: 0
+Exact duplicate groups in training pool: 0
+Conflicting-label duplicate groups: 0
+Exact duplicate groups crossing CV folds: 0
+Rows in duplicate groups crossing folds: 0
+Conflicting-label groups crossing folds: 0
+
+LABEL COUNTS BY FOLD
+--------------------
+fold                   1       2       3       4       5
+Label                                                   
+BENIGN            264387  264387  264387  264387  264386
+DoS GoldenEye       2056    2056    2056    2056    2057
+DoS Hulk           34523   34523   34523   34523   34523
+DoS Slowhttptest    1046    1045    1045    1046    1046
+DoS slowloris       1077    1077    1077    1076    1077
+FTP-Patator         1185    1185    1186    1186    1185
+Heartbleed             1       2       2       1       1
+SSH-Patator          644     644     643     643     643
+
+CAPTURE-DAY COUNTS BY FOLD
+-------------------------
+fold              1       2       3       4       5
+capture_day                                        
+Monday       100141  100419  100319  100565  100671
+Tuesday       84187   84486   84472   83863   84054
+Wednesday    120591  120014  120128  120490  120193
+
+TOP BASELINE FEATURE IMPORTANCES
+--------------------------------
+Bwd Packet Length Std: 0.099083
+Packet Length Variance: 0.084321
+Bwd Packet Length Max: 0.069275
+Avg Bwd Segment Size: 0.067494
+Bwd Packet Length Mean: 0.067145
+Max Packet Length: 0.058084
+Subflow Bwd Bytes: 0.055694
+Destination Port: 0.053370
+Packet Length Std: 0.048380
+Average Packet Size: 0.033379
+Packet Length Mean: 0.022255
+Fwd IAT Max: 0.020524
+Flow IAT Std: 0.020353
+Fwd IAT Mean: 0.018696
+Fwd IAT Total: 0.018581
+Flow IAT Max: 0.018098
+Flow IAT Mean: 0.017322
+Total Length of Bwd Packets: 0.014561
+Fwd Packets/s: 0.013768
+Init_Win_bytes_backward: 0.011755
+
+INTERPRETATION
+--------------
+Near-perfect random-fold metrics may reflect strong separability on these data,
+but can be optimistic when correlated flows or capture sessions cross folds.
+Compare these results with a day/group-aware evaluation before claiming generalization.
+
+Elapsed: 8.3 seconds

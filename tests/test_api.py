@@ -151,3 +151,47 @@ def test_events_endpoint_filters_by_severity_and_type(tmp_path):
 def test_events_endpoint_rejects_invalid_severity():
     response = client.get("/events/?severity=not_a_real_severity")
     assert response.status_code == 400
+
+
+def test_cors_preflight_options():
+    endpoints = [
+        "/health",
+        "/simulation/state",
+        "/events/?limit=15",
+        "/orchestration/runs",
+        "/topology/",
+    ]
+    for ep in endpoints:
+        response = client.options(
+            ep,
+            headers={
+                "Origin": "http://127.0.0.1:5173",
+                "Access-Control-Request-Method": "GET",
+                "Access-Control-Request-Headers": "content-type",
+            },
+        )
+        assert response.status_code == 200, f"Failed preflight for {ep}"
+        assert response.headers.get("access-control-allow-origin") == "http://127.0.0.1:5173"
+        assert "GET" in response.headers.get("access-control-allow-methods", "")
+
+
+def test_cors_get_headers():
+    response = client.get(
+        "/simulation/state",
+        headers={"Origin": "http://127.0.0.1:5173"},
+    )
+    assert response.status_code == 200
+    assert response.headers.get("access-control-allow-origin") == "http://127.0.0.1:5173"
+
+
+def test_topology_and_events_trailing_slash_flexibility():
+    top_no_slash = client.get("/topology")
+    top_slash = client.get("/topology/")
+    assert top_no_slash.status_code == 200
+    assert top_slash.status_code == 200
+    assert top_no_slash.json() == top_slash.json()
+
+    ev_no_slash = client.get("/events")
+    ev_slash = client.get("/events/")
+    assert ev_no_slash.status_code == 200
+    assert ev_slash.status_code == 200

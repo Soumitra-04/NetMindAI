@@ -1,0 +1,197 @@
+{
+  "model": "RandomForestClassifier",
+  "parameters": {
+    "n_estimators": 120,
+    "max_depth": 24,
+    "min_samples_leaf": 2,
+    "max_features": "sqrt",
+    "class_weight": "balanced_subsample",
+    "random_state": 42
+  },
+  "dataset": {
+    "directory": "D:\\NetMind\\data\\processed\\cleaned_final",
+    "feature_count": 67,
+    "train_rows": 1524593,
+    "validation_rows": 397777,
+    "test_rows": 594774,
+    "train_attack_count": 202659,
+    "validation_attack_count": 2178,
+    "test_attack_count": 220070
+  },
+  "protocol": {
+    "threshold_selected_using": "validation F1 grid",
+    "test_used_for_model_or_threshold_selection": false,
+    "binary_target": {
+      "0": "BENIGN",
+      "1": "ATTACK"
+    }
+  },
+  "selected_threshold": 0.3065,
+  "validation_metrics_at_selected_threshold": {
+    "threshold": 0.3065,
+    "precision": 0.8943661971830986,
+    "recall": 0.8746556473829201,
+    "f1": 0.8844011142061281,
+    "average_precision_pr_auc": 0.7606928386103433,
+    "roc_auc": 0.9775783035631909,
+    "confusion_matrix": {
+      "true_negative": 395374,
+      "false_positive": 225,
+      "false_negative": 273,
+      "true_positive": 1905
+    },
+    "classification_report": {
+      "BENIGN": {
+        "precision": 0.9993099909768051,
+        "recall": 0.9994312422427761,
+        "f1-score": 0.9993706129320085,
+        "support": 395599.0
+      },
+      "ATTACK": {
+        "precision": 0.8943661971830986,
+        "recall": 0.8746556473829201,
+        "f1-score": 0.8844011142061281,
+        "support": 2178.0
+      },
+      "accuracy": 0.9987480422447753,
+      "macro avg": {
+        "precision": 0.9468380940799519,
+        "recall": 0.9370434448128482,
+        "f1-score": 0.9418858635690683,
+        "support": 397777.0
+      },
+      "weighted avg": {
+        "precision": 0.9987353786113774,
+        "recall": 0.9987480422447753,
+        "f1-score": 0.9987411055240263,
+        "support": 397777.0
+      }
+    }
+  },
+  "test_metrics_at_selected_threshold": {
+    "threshold": 0.3065,
+    "precision": 0.9968260531180075,
+    "recall": 0.37247693915572316,
+    "f1": 0.5423119926431185,
+    "average_precision_pr_auc": 0.9360622248721959,
+    "roc_auc": 0.9630147833854121,
+    "confusion_matrix": {
+      "true_negative": 374443,
+      "false_positive": 261,
+      "false_negative": 138099,
+      "true_positive": 81971
+    },
+    "classification_report": {
+      "BENIGN": {
+        "precision": 0.7305606174713487,
+        "recall": 0.9993034501900167,
+        "f1-score": 0.8440567779398273,
+        "support": 374704.0
+      },
+      "ATTACK": {
+        "precision": 0.9968260531180075,
+        "recall": 0.37247693915572316,
+        "f1-score": 0.5423119926431185,
+        "support": 220070.0
+      },
+      "accuracy": 0.767373826024675,
+      "macro avg": {
+        "precision": 0.8636933352946781,
+        "recall": 0.6858901946728699,
+        "f1-score": 0.6931843852914729,
+        "support": 594774.0
+      },
+      "weighted avg": {
+        "precision": 0.8290804492440224,
+        "recall": 0.767373826024675,
+        "f1-score": 0.7324093708570586,
+        "support": 594774.0
+      }
+    }
+  },
+  "fit_seconds": 137.24155712127686,
+  "total_seconds": 147.9423475265503,
+  "model_path": "D:\\NetMind\\models\\baseline_random_forest.joblib",
+  "feature_importance_top_20": [
+    {
+      "feature": "Bwd Packet Length Std",
+      "importance": 0.09908259117665855
+    },
+    {
+      "feature": "Packet Length Variance",
+      "importance": 0.08432124865950395
+    },
+    {
+      "feature": "Bwd Packet Length Max",
+      "importance": 0.06927511168735552
+    },
+    {
+      "feature": "Avg Bwd Segment Size",
+      "importance": 0.0674939818930329
+    },
+    {
+      "feature": "Bwd Packet Length Mean",
+      "importance": 0.06714461082578202
+    },
+    {
+      "feature": "Max Packet Length",
+      "importance": 0.05808448262345877
+    },
+    {
+      "feature": "Subflow Bwd Bytes",
+      "importance": 0.05569375010754197
+    },
+    {
+      "feature": "Destination Port",
+      "importance": 0.05336988324627444
+    },
+    {
+      "feature": "Packet Length Std",
+      "importance": 0.04837978047831919
+    },
+    {
+      "feature": "Average Packet Size",
+      "importance": 0.033379052577028105
+    },
+    {
+      "feature": "Packet Length Mean",
+      "importance": 0.02225478394534976
+    },
+    {
+      "feature": "Fwd IAT Max",
+      "importance": 0.02052379783787428
+    },
+    {
+      "feature": "Flow IAT Std",
+      "importance": 0.020352679390155958
+    },
+    {
+      "feature": "Fwd IAT Mean",
+      "importance": 0.018695645051936396
+    },
+    {
+      "feature": "Fwd IAT Total",
+      "importance": 0.018581474548929496
+    },
+    {
+      "feature": "Flow IAT Max",
+      "importance": 0.01809769584499694
+    },
+    {
+      "feature": "Flow IAT Mean",
+      "importance": 0.0173215240097926
+    },
+    {
+      "feature": "Total Length of Bwd Packets",
+      "importance": 0.01456127383811282
+    },
+    {
+      "feature": "Fwd Packets/s",
+      "importance": 0.013767909623918028
+    },
+    {
+      "feature": "Init_Win_bytes_backward",
+      "importance": 0.01175542894043641
+    }
+  ]
+}

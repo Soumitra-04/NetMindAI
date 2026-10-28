@@ -19,6 +19,7 @@ orchestrator = NetworkOrchestrator()
 
 
 @router.post("/runs", response_model=OrchestrationRunResponse)
+@router.post("/runs/", response_model=OrchestrationRunResponse, include_in_schema=False)
 def start_orchestration_run(
     request: OrchestrationStartRequest = OrchestrationStartRequest(),
 ):
@@ -39,6 +40,7 @@ def start_orchestration_run(
 
 
 @router.get("/runs", response_model=list[OrchestrationRunResponse])
+@router.get("/runs/", response_model=list[OrchestrationRunResponse], include_in_schema=False)
 def list_orchestration_runs(
     status_filter: str | None = Query(default=None, alias="status", description="Filter runs by status"),
 ):

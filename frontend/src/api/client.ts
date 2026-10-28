@@ -3,7 +3,9 @@
  */
 
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+  import.meta.env.VITE_API_BASE_URL !== undefined
+    ? import.meta.env.VITE_API_BASE_URL
+    : 'http://127.0.0.1:8000';
 
 export class ApiError extends Error {
   public status: number;
@@ -42,11 +44,21 @@ export async function apiClient<T>(
     }
   }
 
+  const headersObj: Record<string, string> = {
+    ...(headers as Record<string, string>),
+  };
+
+  if (
+    customConfig.body ||
+    (customConfig.method && ['POST', 'PUT', 'PATCH'].includes(customConfig.method.toUpperCase()))
+  ) {
+    if (!headersObj['Content-Type']) {
+      headersObj['Content-Type'] = 'application/json';
+    }
+  }
+
   const config: RequestInit = {
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
+    headers: headersObj,
     ...customConfig,
   };
 
@@ -83,4 +95,3 @@ export async function apiClient<T>(
 
   return response.json() as Promise<T>;
 }
-

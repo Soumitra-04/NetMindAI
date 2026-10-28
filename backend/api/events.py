@@ -15,6 +15,7 @@ event_service = EventService(lambda: sim_mod.simulation.telemetry)
 
 
 @router.get("/", response_model=list[dict[str, Any]])
+@router.get("", response_model=list[dict[str, Any]], include_in_schema=False)
 def get_events(
     limit: int = Query(default=100, ge=1, le=1000, description="Maximum events to return"),
     severity: str | None = Query(default=None, description="Filter by event severity"),
