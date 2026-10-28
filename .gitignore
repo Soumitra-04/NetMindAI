@@ -1,23 +1,94 @@
-# Python
-__pycache__/
-*.py[cod]
-.pytest_cache/
+
+# ==============================
+# Python environments
+# ==============================
 .venv/
 venv/
+env/
+ENV/
 
-# Environment secrets
+# Python cache and test artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environment variables and secrets
 .env
 .env.*
+!.env.example
 
-# Generated data and telemetry
+# Logs and temporary files
+*.log
+logs/
+temp/
+tmp/
+*.tmp
+
+# IDE and operating system
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Frontend dependencies and build output
+node_modules/
+dist/
+build/
+.next/
+coverage/
+
+# Jupyter generated checkpoints
+.ipynb_checkpoints/
+
+# Local databases and runtime state
+*.sqlite
+*.sqlite3
+*.db
+*.pid
+
+# LangGraph local checkpoint/state files
+checkpoints/
+checkpoints.db
+langgraph_checkpoints.db
+
+# Generated training outputs and experiment artifacts
+runs/
+wandb/
+mlruns/
+tensorboard/
+lightning_logs/
+
+# Model checkpoint formats - review before keeping these rules
+# Uncomment only if these are generated artifacts that should not be shared:
+# *.pt
+# *.pth
+# *.ckpt
+# *.onnx
+# *.safetensors
+
+# Local secrets / credentials
+*.pem
+*.key
+
+
+# Large CICIDS datasets — retain locally, don't commit
+data/raw/
+data/processed/
+
+# Generated simulator event logs
 data/events.jsonl
 
-# Model artifacts
-models/*.joblib
-models/*.pkl
-models/*.pt
-models/*.pth
-models/*.onnx
+data/malformed_test.jsonl
+data/persistence_test.jsonl
+data/test_events.jsonl
 
-# Temporary diagnostics
+opencode.json
 debug_red_agent.py

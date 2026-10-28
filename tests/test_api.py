@@ -76,3 +76,78 @@ def test_reset_restores_demo_topology_and_flows():
     assert state["step_number"] == 0
     assert len(state["topology"]["nodes"]) == original_node_count
     assert len(state["flows"]) == original_flow_count
+
+
+def test_events_endpoint_returns_list():
+    response = client.get("/events/")
+
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+
+
+def test_events_endpoint_reflects_red_agent_execution(tmp_path):
+    from backend.agents.red_agent import RedAgent
+    import backend.api.simulation as sim_mod
+
+    sim_mod.simulation = sim_mod.SimulationController.create_demo()
+    sim_mod.simulation.telemetry.event_log_path = tmp_path / "events.jsonl"
+    sim_mod.simulation.telemetry.events.clear()
+
+    agent = RedAgent(sim_mod.simulation)
+    result = agent.execute("link_disruption")
+
+    response = client.get("/events/?event_type=red_scenario_executed")
+    assert response.status_code == 200
+
+    events = response.json()
+    assert len(events) >= 1
+    assert events[0]["event_type"] == "red_scenario_executed"
+    assert events[0]["source"] == "red_agent"
+    assert events[0]["details"]["scenario_id"] == "link_disruption"
+
+    # Verify simulation state reflects disruption
+    state_res = client.get("/simulation/state")
+    assert state_res.status_code == 200
+    state = state_res.json()
+    # Check that router-1<->server-1 link is disabled
+    link = next(
+        l for l in state["topology"]["links"]
+        if {l["source"], l["target"]} == {"router-1", "server-1"}
+    )
+    assert link["active"] is False
+
+
+def test_events_endpoint_filters_by_severity_and_type(tmp_path):
+    import backend.api.simulation as sim_mod
+
+    sim_mod.simulation = sim_mod.SimulationController.create_demo()
+    sim_mod.simulation.telemetry.event_log_path = tmp_path / "events.jsonl"
+    sim_mod.simulation.telemetry.events.clear()
+
+    sim_mod.simulation.telemetry.record_event(
+        event_type="test_info",
+        message="Info event",
+        severity="info",
+    )
+    sim_mod.simulation.telemetry.record_event(
+        event_type="test_warn",
+        message="Warning event",
+        severity="warning",
+    )
+
+    info_res = client.get("/events/?severity=info")
+    assert info_res.status_code == 200
+    info_events = info_res.json()
+    assert len(info_events) == 1
+    assert info_events[0]["event_type"] == "test_info"
+
+    warn_res = client.get("/events/?severity=warning")
+    assert warn_res.status_code == 200
+    warn_events = warn_res.json()
+    assert len(warn_events) == 1
+    assert warn_events[0]["event_type"] == "test_warn"
+
+
+def test_events_endpoint_rejects_invalid_severity():
+    response = client.get("/events/?severity=not_a_real_severity")
+    assert response.status_code == 400

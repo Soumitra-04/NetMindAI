@@ -126,3 +126,135 @@ def test_red_agent_rejects_invalid_llm_plan(simulation):
     with pytest.raises(ValueError, match="unsupported scenario"):
         agent.plan()
 
+
+
+def test_red_agent_executes_server_disruption(simulation):
+    agent = RedAgent(simulation)
+
+    result = agent.execute("server_disruption")
+
+    assert result["scenario_id"] == "server_disruption"
+    assert result["status"] == "executed"
+    assert result["action"] == "disable_simulated_node"
+    assert result["target"] == "server-1"
+    assert result["route_before"] == ["client-1", "switch-1", "server-1"]
+    assert result["route_after"] is None
+    assert result["disruption_active"] is True
+
+    # Check node status in topology
+    server = simulation.topology.get_node("server-1")
+    assert server.active is False
+
+    # Check telemetry event recorded
+    events = simulation.telemetry.get_events(
+        limit=10,
+        event_type="red_scenario_executed",
+    )
+    assert len(events) == 1
+    assert events[0]["source"] == "red_agent"
+    assert events[0]["entity_id"] == "server-1"
+    assert "unreachable" in events[0]["message"]
+
+
+def test_red_agent_rejects_already_disabled_server(simulation):
+    simulation.topology.set_node_status("server-1", active=False)
+    agent = RedAgent(simulation)
+
+    with pytest.raises(RuntimeError, match="Target server is already disabled"):
+        agent.execute("server_disruption")
+
+
+def test_red_agent_rejects_empty_or_whitespace_goal(simulation):
+    agent = RedAgent(simulation)
+
+    with pytest.raises(ValueError, match="Planning goal cannot be empty"):
+        agent.plan("")
+
+    with pytest.raises(ValueError, match="Planning goal cannot be empty"):
+        agent.plan("   \t\n  ")
+
+
+def test_red_agent_executes_planned_workflow(simulation):
+    class FakeLLM:
+        model = "mock-qwen"
+
+        def chat_json(self, system, prompt):
+            return {
+                "scenario_id": "server_disruption",
+                "rationale": "Target server-1 to evaluate traffic isolation.",
+            }
+
+    agent = RedAgent(simulation, llm=FakeLLM())
+    result = agent.execute_planned(goal="Test server failure")
+
+    assert result["scenario_id"] == "server_disruption"
+    assert result["status"] == "executed"
+    assert result["plan"]["scenario_id"] == "server_disruption"
+    assert result["plan"]["planner_model"] == "mock-qwen"
+    assert result["plan"]["rationale"] == "Target server-1 to evaluate traffic isolation."
+
+    # Topology should reflect node is down
+    assert simulation.topology.get_node("server-1").active is False
+
+
+def test_red_agent_handles_unavailable_ollama(simulation):
+    class FailingLLM:
+        model = "failing-model"
+
+        def chat_json(self, system, prompt):
+            raise RuntimeError("Cannot connect to Ollama at http://localhost:11434. Is Ollama running?")
+
+    agent = RedAgent(simulation, llm=FailingLLM())
+
+    with pytest.raises(RuntimeError, match="Cannot connect to Ollama"):
+        agent.plan()
+
+
+def test_red_agent_handles_malformed_llm_response(simulation):
+    class MalformedLLM:
+        model = "malformed-model"
+
+        def __init__(self, bad_payload):
+            self.bad_payload = bad_payload
+
+        def chat_json(self, system, prompt):
+            return self.bad_payload
+
+    # Missing rationale
+    agent1 = RedAgent(simulation, llm=MalformedLLM({"scenario_id": "link_disruption"}))
+    with pytest.raises(ValueError, match="must include a rationale"):
+        agent1.plan()
+
+    # Empty rationale
+    agent2 = RedAgent(simulation, llm=MalformedLLM({"scenario_id": "link_disruption", "rationale": "  "}))
+    with pytest.raises(ValueError, match="must include a rationale"):
+        agent2.plan()
+
+    # Missing scenario_id
+    agent3 = RedAgent(simulation, llm=MalformedLLM({"rationale": "Valid reason"}))
+    with pytest.raises(ValueError, match="unsupported scenario"):
+        agent3.plan()
+
+
+def test_red_agent_state_changes_visible_in_snapshot(simulation):
+    agent = RedAgent(simulation)
+    agent.execute("server_disruption")
+
+    # Step simulation so traffic engine and telemetry update
+    snapshot = simulation.step()
+
+    # Check topology in snapshot
+    server_node = next(
+        n for n in snapshot["topology"]["nodes"] if n["id"] == "server-1"
+    )
+    assert server_node["active"] is False
+
+    # Check flow destined for server-1
+    flow1 = next(f for f in snapshot["flows"] if f["id"] == "flow-1")
+    assert flow1["reachable"] is False
+    assert flow1["route"] is None
+
+    # Check metrics
+    traffic_metrics = snapshot["metrics"]["traffic"]
+    assert traffic_metrics["reachable_active_flows"] == 1
+    assert traffic_metrics["total_flows"] == 2

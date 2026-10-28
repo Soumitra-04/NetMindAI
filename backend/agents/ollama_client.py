@@ -1,4 +1,3 @@
-
 """Minimal client for a locally running Ollama instance."""
 
 from __future__ import annotations
@@ -20,8 +19,24 @@ class OllamaClient:
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
 
-    def chat_json(self, system: str, prompt: str) -> dict[str, Any]:
+    def chat_json(
+        self,
+        system: str,
+        prompt: str,
+        schema: dict[str, Any] | None = None,
+        num_predict: int = 150,
+    ) -> dict[str, Any]:
         """Request a JSON response from the local model."""
+        format_schema = schema or {
+            "type": "object",
+            "properties": {
+                "scenario_id": {"type": "string"},
+                "rationale": {"type": "string"},
+            },
+            "required": ["scenario_id", "rationale"],
+            "additionalProperties": False,
+        }
+
         payload = {
             "model": self.model,
             "messages": [
@@ -29,19 +44,11 @@ class OllamaClient:
                 {"role": "user", "content": prompt},
             ],
             "stream": False,
-            "format": {
-                "type": "object",
-                "properties": {
-                    "scenario_id": {"type": "string"},
-                    "rationale": {"type": "string"},
-                },
-                "required": ["scenario_id", "rationale"],
-                "additionalProperties": False,
-            },
+            "format": format_schema,
             "think": False,
             "options": {
                 "temperature": 0,
-                "num_predict": 120,
+                "num_predict": num_predict,
             },
         }
 
